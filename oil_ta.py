@@ -37,14 +37,22 @@ def ta_analizer(b_data):
     b_data['macdhist'] = macdhist
     b_data['rsi'] = rsi
     # b_data['d_price'] = b_data['price'].diff(5)
-    b_data['d_price'] = b_data['price'].diff(5)
-    b_data['d_price'] = b_data['d_price'].shift(-5)
-    b_data['d_macd'] = b_data['macd'].diff(5)
-    b_data['d_macdsignal'] = b_data['macdsignal'].diff(5)
-    b_data['d_macdhist'] = b_data['macdhist'].diff(5)
-    b_data['d_rsi'] = b_data['rsi'].diff(5)
+    b_data['pct5_price'] = b_data['price'].pct_change(5) *100
+    b_data['pct5_price'] = b_data['pct5_price'].shift(-5)
+    b_data['pct5_macd'] = b_data['macd'].diff(5)/b_data['price'] *100
+    b_data['pct5_macdsignal'] = b_data['macdsignal'].diff(5)/b_data['price'] *100
+    b_data['pct5_macdhist'] = b_data['macdhist'].diff(5)/b_data['price'] *100
+    b_data['pct5_rsi'] = b_data['rsi'].diff(5)/b_data['price'] *100
+    b_data['pct5_vol'] = b_data['vol'].pct_change(5)
+    print b_data
+    b_data['pct20_price'] = b_data['price'].pct_change(5) *100
+    b_data['pct20_price'] = b_data['pct20_price'].shift(-20)
+    b_data['pct20_macd'] = b_data['macd'].diff(20)/b_data['price'] *100
+    b_data['pct20_macdsignal'] = b_data['macdsignal'].diff(20)/b_data['price'] *100
+    b_data['pct20_macdhist'] = b_data['macdhist'].diff(20)/b_data['price'] *100
+    b_data['pct20_rsi'] = b_data['rsi'].diff(20)/b_data['price'] *100
+    b_data['pct20_vol'] = b_data['vol'].pct_change(20)
     return b_data
-
 
 b_data = load_data('oilpricedata.txt')
 b_data = ta_analizer(b_data)
