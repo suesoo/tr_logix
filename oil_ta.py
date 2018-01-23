@@ -34,6 +34,7 @@ def ta_analizer(b_data):
     macd_20, macdsignal_20, macdhist_20 = ta.MACD(b_data['price'].as_matrix(), fastperiod=20, slowperiod=60, signalperiod=16)
     sma_5 = ta.SMA(b_data['price'].as_matrix(), timeperiod=5)
     sma_20 = ta.SMA(b_data['price'].as_matrix(), timeperiod=20)
+    b_upper, b_middle, b_lower = ta.BBANDS(b_data['price'].as_matrix(), timeperiod=20)
 
     rsi = ta.RSI(b_data['price'].as_matrix())
     b_data['sma_5'] = sma_5
@@ -44,6 +45,9 @@ def ta_analizer(b_data):
     b_data['macd_20'] = macd_20
     b_data['macdsignal_20'] = macdsignal_20
     b_data['macdhist_20'] = macdhist_20
+    b_data['b_upper'] = b_upper
+    b_data['b_middle'] = b_middle
+    b_data['b_lower'] = b_lower
 
     b_data['rsi'] = rsi
     # b_data['d_price'] = b_data['price'].diff(5)
@@ -56,6 +60,8 @@ def ta_analizer(b_data):
     b_data['pct5_macdhist_5'] = b_data['macdhist_5'].diff(5)/b_data['price'] *100
     b_data['d5_rsi'] = b_data['rsi'].diff(5)
     b_data['pct5_vol'] = b_data['vol'].pct_change(5)*100
+    # b_data['b_upper'] = b_data['b_upper'] - b_data['price']
+    # b_data['b_lower'] = b_data['b_lower'] - b_data['price']
 
     print b_data
     b_data['pct5_sma_20'] = b_data['sma_20'].pct_change(5) *100
