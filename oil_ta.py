@@ -21,6 +21,7 @@ def load_data(data_path):
     '''
     b_data = pd.read_table(filepath_or_buffer=data_path)
     b_data['vol'] = b_data['vol_1'] + b_data['vol_2']
+    print b_data.head()
     return b_data
 
 
@@ -53,6 +54,8 @@ def ta_analizer(b_data):
     # b_data['d_price'] = b_data['price'].diff(5)
     b_data['pct5_sma_5'] = b_data['sma_5'].pct_change(5) *100
     b_data['pct5_sma_5'] = b_data['pct5_sma_5'].shift(-5)
+    b_data['pct5_dollar_idx'] = b_data['dollar_idx'].pct_change(5) * 100
+    b_data['pct5_dollar_idx'] = b_data['pct5_dollar_idx'].shift(-5)
     b_data['pct5_price'] = b_data['price'].pct_change(5) * 100
     b_data['pct5_price'] = b_data['pct5_price'].shift(-5)
     b_data['pct5_macd_5'] = b_data['macd_5'].diff(5)/b_data['price'] *100
@@ -60,8 +63,8 @@ def ta_analizer(b_data):
     b_data['pct5_macdhist_5'] = b_data['macdhist_5'].diff(5)/b_data['price'] *100
     b_data['d5_rsi'] = b_data['rsi'].diff(5)
     b_data['pct5_vol'] = b_data['vol'].pct_change(5)*100
-    # b_data['b_upper'] = b_data['b_upper'] - b_data['price']
-    # b_data['b_lower'] = b_data['b_lower'] - b_data['price']
+    b_data['b_upper'] = b_data['b_upper'] - b_data['price']
+    b_data['b_lower'] = b_data['b_lower'] - b_data['price']
 
     print b_data
     b_data['pct5_sma_20'] = b_data['sma_20'].pct_change(5) *100
@@ -73,6 +76,6 @@ def ta_analizer(b_data):
     # b_data['pct20_vol'] = b_data['vol'].pct_change(20)
     return b_data
 
-b_data = load_data('oilpricedata.txt')
+b_data = load_data('c:\\ml_test\\oilpricedata_2.txt')
 b_data = ta_analizer(b_data)
-b_data.to_csv('c:\\fine_oil_price.txt')
+b_data.to_csv('c:\\ml_test\\fine_oil_price.txt')
